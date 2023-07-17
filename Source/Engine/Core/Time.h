@@ -21,8 +21,15 @@ namespace JoeBidenWakeup
 		clock_rep GetElapsedMicroseconds();
 		clock_rep GetElapsedMilliseconds();
 		float GetElapsedSeconds();
-
+		float getTime() const { return time; };
+		float getDeltaTime() const { return deltaTime; };
+		void tick();
 	private:
 		clock::time_point m_startTime;
+		clock::time_point frameTime;
+		float time, deltaTime;
+
 	};
+
+	extern Time gTime;
 }
