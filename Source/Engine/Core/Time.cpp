@@ -1,5 +1,5 @@
 #include "Time.h"
-
+#include "MathUtils.h"
 namespace JoeBidenWakeup
 {
 	Time gTime;
@@ -28,7 +28,7 @@ namespace JoeBidenWakeup
 		time = duration.count() / static_cast<float>(clock_duration::period::den);
 		
 		duration = clock::now() - frameTime;
-		deltaTime = duration.count() / static_cast<float>(clock_duration::period::den);
+		deltaTime = clamp(duration.count() / static_cast<float>(clock_duration::period::den), 0.0f, 0.25f);
 
 		frameTime = clock::now();
 	}

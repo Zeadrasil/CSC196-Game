@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "SDL2-2.28.0/include/SDL.h"
+#include "SDL2-2.28.0/include/SDL_ttf.h"
 
 namespace JoeBidenWakeup
 {
@@ -7,10 +8,14 @@ namespace JoeBidenWakeup
 	bool Renderer::initialize()
 	{
 		SDL_Init(SDL_INIT_VIDEO);
+		TTF_Init();
 		return true;
 	}
 	void Renderer::shutdown()
 	{
+		SDL_DestroyRenderer(renderer);
+		SDL_DestroyWindow(window);
+		TTF_Quit();
 	}
 	void Renderer::createWindow(const std::string& title, int width, int height)
 	{
@@ -28,7 +33,7 @@ namespace JoeBidenWakeup
 	{
 		SDL_RenderPresent(renderer);
 	}
-	void Renderer::setColor(int r, int g, int b, int a)
+	void Renderer::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 	{
 		SDL_SetRenderDrawColor(renderer, r, g, b, a);
 	}
@@ -39,10 +44,6 @@ namespace JoeBidenWakeup
 	void Renderer::drawPoint(int x, int y)
 	{
 		SDL_RenderDrawPoint(renderer, x, y);
-	}
-	void Renderer::setColor(float r, float g, float b, float a)
-	{
-		SDL_SetRenderDrawColor(renderer, r, g, b, a);
 	}
 	void Renderer::drawLine(float startX, float startY, float endX, float endY)
 	{

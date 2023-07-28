@@ -75,6 +75,10 @@ public:
 	float angle() const { return std::atan2f(y, x); };
 
 	Vector2 rotateR(float radians) const;
+
+	static float signedAngle(const Vector2& v1, const Vector2& v2);
+	static float angle(const Vector2& v1, const Vector2& v2);
+	static float dot(const Vector2& v1, const Vector2& v2);
 };
  inline std::istream& operator >> (std::istream& stream, Vector2& v)
 {
@@ -91,6 +95,22 @@ public:
  inline Vector2 Vector2::rotateR(float radians) const
  {
 	 return { (x * std::cos(radians)) - (y * std::sin(radians)), (x * std::sin(radians)) + (y * std::cos(radians))};
+ }
+
+ inline float Vector2::angle(const Vector2& v1, const Vector2& v2)
+ {
+	 return std::acos(dot(v1, v2));
+ }
+ inline float Vector2::signedAngle(const Vector2& v1, const Vector2& v2)
+ {
+	 float y = v1.x * v2.y - v1.y * v2.x;
+	 float x = v1.x * v2.x + v1.y * v2.y;
+
+	 return std::atan2(y, x);
+ }
+ inline float Vector2::dot(const Vector2& v1, const Vector2& v2)
+ {
+	 return v1.x * v2.x + v1.y * v2.y;
  }
 }
 

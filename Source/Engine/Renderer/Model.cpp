@@ -7,6 +7,7 @@ void JoeBidenWakeup::Model::Draw(const Vector2& position, float radianRotation, 
 	{
 		return;
 	}
+	gRenderer.setColor(Color::toInt(color.r), Color::toInt(color.g), Color::toInt(color.b), Color::toInt(color.a));
 	for (size_t index = 0; index < points.size() - 1; index++)
 	{
 		Vector2 p1 = (points[index] * scale).rotateR(radianRotation) + position, p2 = (points[index + 1] * scale).rotateR(radianRotation) + position;
@@ -28,6 +29,8 @@ bool JoeBidenWakeup::Model::load(const std::string& filename)
 
 	std::istringstream stream(buffer);
 
+	stream >> color;
+
 	std::string line;
 	std::getline(stream, line);
 
@@ -38,6 +41,7 @@ bool JoeBidenWakeup::Model::load(const std::string& filename)
 		Vector2 point;
 		stream >> point;
 		points.push_back(point);
+		radius = max<float>(radius, point.length());
 	}
 
 	return true;

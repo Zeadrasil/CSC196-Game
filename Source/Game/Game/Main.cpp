@@ -4,8 +4,11 @@
 #include "Renderer/Render.h"
 #include "Input/Input.h"
 #include <thread>
-#include "Actor.h"
+#include "Framework/Actor.h"
 #include "Player.h"
+#include "Framework/Scene.h"
+#include "Audio/AudioSystem.h"
+#include <memory>
 using namespace std;
 class Star
 {
@@ -25,8 +28,7 @@ public:
 
 int main(int argc, char* argv[])
 {
-	JoeBidenWakeup::seedRandom((unsigned int)time(nullptr));
-	JoeBidenWakeup::setFilePath("Assets");
+	//cout << "enable rotation";
 	/*for (int i = 0; i < 1000000; i++)
 	{
 		int* p = new int;
@@ -61,9 +63,6 @@ int main(int argc, char* argv[])
 	JoeBidenWakeup::Time timer;
 	for (int i = 0; i < 100000000; i++) {}
 	cout << timer.GetElapsedSeconds();*/
-	vector<JoeBidenWakeup::Vector2> points{ {-10, 5}, {10, 5}, {0, -5} };
-	JoeBidenWakeup::gRenderer.initialize();
-	JoeBidenWakeup::gRenderer.createWindow("CSC196", 800, 600);
 	/*
 	vector<JoeBidenWakeup::Vector2> points;
 	for (int i = 0; i < 100; i++)
@@ -162,70 +161,17 @@ int main(int argc, char* argv[])
 	JoeBidenWakeup::gRenderer.endFrame();
 	}
 	*/
-	vector<JoeBidenWakeup::Model> models;
-	vector<JoeBidenWakeup::Vector2> locations;
-	JoeBidenWakeup::Vector2 v{ 5, 5 };
-	v.normalize();
-	JoeBidenWakeup::Model model = JoeBidenWakeup::Model();
-	JoeBidenWakeup::Vector2 speed{ 10, 0 };
-	model.load("ship.txt");
-	JoeBidenWakeup::gInputSystem.initialize();
-	JoeBidenWakeup::Vector2 position{ 100, 100 };
-	float turnRate = JoeBidenWakeup::halfPi / 10;
-	float rotating = 0;
-	JoeBidenWakeup::Transform transform;
-	transform.position = position;
-	transform.rotation = 0;
-	transform.scale = 1;
-	JoeBidenAwoken::Player player(0, JoeBidenWakeup::halfPi / 30, transform, model);
-	std::vector<JoeBidenAwoken::Actor> players;
-	players.push_back(player);
-	transform.position.y += JoeBidenWakeup::gRenderer.getHeight();
-	players.push_back(JoeBidenAwoken::Actor(transform, model));
-	transform.position.x += JoeBidenWakeup::gRenderer.getWidth();
-	players.push_back(JoeBidenAwoken::Actor(transform, model));
-	transform.position.y -= JoeBidenWakeup::gRenderer.getHeight();
-	players.push_back(JoeBidenAwoken::Actor(transform, model));
-	transform.position.y -= JoeBidenWakeup::gRenderer.getHeight();
-	players.push_back(JoeBidenAwoken::Actor(transform, model));
-	transform.position.x -= JoeBidenWakeup::gRenderer.getWidth();
-	players.push_back(JoeBidenAwoken::Actor(transform, model));
-	transform.position.x -= JoeBidenWakeup::gRenderer.getWidth();
-	players.push_back(JoeBidenAwoken::Actor(transform, model));
-	transform.position.y += JoeBidenWakeup::gRenderer.getHeight();
-	players.push_back(JoeBidenAwoken::Actor(transform, model));
-	transform.position.y += JoeBidenWakeup::gRenderer.getHeight();
-	players.push_back(JoeBidenAwoken::Actor(transform, model));
+	//JoeBidenWakeup::gAudioSystem.add("hit", "hit.wav");
 	/*vector<int> colorR;
 	vector<int> colorG;
 	vector<int> colorB;
 	vector<int> colorA;
 	vector<float> rotations;*/
-	bool quit = false;
-	while (!quit)
-	{
-		JoeBidenWakeup::gRenderer.beginFrame();
-		JoeBidenWakeup::gTime.tick();
-		JoeBidenWakeup::gInputSystem.update();
-		if (JoeBidenWakeup::gInputSystem.getKeyDown(SDL_SCANCODE_TAB))
-		{
-			this_thread::sleep_for(chrono::nanoseconds(1));
-		}
 		/*
 		colorR.push_back(JoeBidenWakeup::random((unsigned int)256));
 		colorG.push_back(JoeBidenWakeup::random((unsigned int)256));
 		colorB.push_back(JoeBidenWakeup::random((unsigned int)256));
 		colorA.push_back(JoeBidenWakeup::random((unsigned int)256));*/
-		JoeBidenWakeup::gRenderer.setColor(JoeBidenWakeup::random((unsigned int)256), JoeBidenWakeup::random((unsigned int)256), JoeBidenWakeup::random((unsigned int)256), JoeBidenWakeup::random((unsigned int)256));
-		transform = player.update();
-		for (int index = 1; index < players.size(); index++)
-		{
-			players[index].setChangeData(transform);
-			players[index].update();
-		}
-		JoeBidenWakeup::gRenderer.setColor(0, 0, 0, 0);
-		JoeBidenWakeup::gRenderer.endFrame();
-		
 		/*
 		models.push_back(JoeBidenWakeup::Model(model.getPoints()));
 		locations.push_back(position);
@@ -273,6 +219,13 @@ int main(int argc, char* argv[])
 		speed *= 0.9999999999 * (1 - JoeBidenWakeup::gTime.getDeltaTime());
 		transform.rotation += rotating;
 		rotating *= 0.99 * (1 - JoeBidenWakeup::gTime.getDeltaTime());*/
+	JoeBidenAwoken::Asteroids asteroids;
+	asteroids.init();
+	JoeBidenWakeup::MemoryTracker::initialize();
+	while (!JoeBidenWakeup::gInputSystem.getKeyDown(SDL_SCANCODE_ESCAPE))
+	{
+		asteroids.update(0);
 	}
+	JoeBidenWakeup::MemoryTracker::displayInfo();
 	return 0;
 }

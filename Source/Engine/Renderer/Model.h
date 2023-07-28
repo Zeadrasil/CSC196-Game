@@ -14,9 +14,12 @@ namespace JoeBidenWakeup
 
 		std::vector<JoeBidenWakeup::Vector2> getPoints() const { return points; };
 		bool load(const std::string& filename);
+		virtual float getRadius() { return radius; };
+		Color getColor() const { return color; };
 	private:
 		std::vector<JoeBidenWakeup::Vector2> points;
-
+		Color color;
+		float radius = 0;
 	};
 }
 

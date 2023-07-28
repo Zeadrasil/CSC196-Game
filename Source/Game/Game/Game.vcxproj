@@ -141,13 +141,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Asteroid.cpp" />
+    <ClCompile Include="Asteroids.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Upgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Engine\Audio\Audio.vcxproj">
+      <Project>{81234bef-ed45-4d35-9c02-c0e71e28339b}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\Core\Core.vcxproj">
       <Project>{cfdeaef2-f7a9-4f88-9f58-2282fc0820a3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Framework\Framework.vcxproj">
+      <Project>{28850885-2544-4760-8a31-08f3373bf2f1}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\Input\Input.vcxproj">
       <Project>{233aac82-5691-4e46-806f-fa6da151a317}</Project>
@@ -158,8 +168,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Asteroid.h" />
+    <ClInclude Include="Asteroids.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Upgrade.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

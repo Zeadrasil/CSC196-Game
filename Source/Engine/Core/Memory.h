@@ -1,25 +1,20 @@
 #pragma once
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#include <memory>
+
+#ifdef _DEBUG
+#define DEBUG_NEW   new( _CLIENT_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif // _DEBUG
+
 namespace JoeBidenWakeup
 {
-	struct MemoryAllocation
-	{
-		void* address;
-		size_t size;
-		MemoryAllocation* next;
-		MemoryAllocation* previous;
-	};
-
 	class MemoryTracker
 	{
 	public:
-		void add(void* address, size_t size);
-		void remove(void* address, size_t size);	
-
-		void displayInfo();
-	private:
-		size_t bytesAllocated = 0;
-		size_t numAllocations = 0;
+		static bool initialize();
+		static void displayInfo();
 	};
-	extern MemoryTracker memoryTracker;
 }
-

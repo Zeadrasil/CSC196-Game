@@ -1,3 +1,5 @@
 #pragma once
 #include "Renderer.h"
-#include "Model.h"
+#include "ModelManager.h"
+#include "Text.h"
+#include "ParticleSystem.h"

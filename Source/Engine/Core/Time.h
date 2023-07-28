@@ -22,12 +22,15 @@ namespace JoeBidenWakeup
 		clock_rep GetElapsedMilliseconds();
 		float GetElapsedSeconds();
 		float getTime() const { return time; };
-		float getDeltaTime() const { return deltaTime; };
+		float getDeltaTime() const { return deltaTime * timeScale; };
+		float getUnscaledDeltaTime() const { return deltaTime; };
 		void tick();
+		float getTimeScale() const { return timeScale; };
+		void setTimeScale(float timeScale) { this->timeScale = timeScale; };
 	private:
 		clock::time_point m_startTime;
 		clock::time_point frameTime;
-		float time, deltaTime;
+		float time, deltaTime, timeScale = 1;
 
 	};
 
